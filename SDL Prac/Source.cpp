@@ -1,5 +1,12 @@
 #include<../../Game.hpp>
-#include<SDL_image.h>
+#include<../../Linked_List.hpp>
+#include<iostream>
+
+
+/*void print(node<int>* x)
+{
+	std::cout << x->get_data() << ' ';
+}*/
 
 int main(int argc, char* argv[])
 {
@@ -7,12 +14,21 @@ int main(int argc, char* argv[])
 	game->init("game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 550, false);
 	while (game->running())
 	{
-		game->handle_events();
 		game->update();
 		game->render();
-		SDL_Delay(6000);
-		game->clean();
+		SDL_Delay(800);	
+		game->handle_events();
 	}
+	
+	/*
+	int c = 5;
+	Linked_List<int> a;
+	a.push_front(c);
+	a.push_front(7);
+	a.push_front(9);
+	a.push_front(3);
+	a.iterate_func(print, 0, INT_MAX);
+	*/
 	/*
 	SDL_Init(SDL_INIT_EVERYTHING);
 	SDL_Window* window = SDL_CreateWindow("viking", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 550, 0);

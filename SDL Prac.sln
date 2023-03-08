@@ -5,8 +5,6 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SDL Prac", "SDL Prac\SDL Prac.vcxproj", "{E6B92B2C-8DEA-4BC5-B619-0D9EE264B8E0}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SDL_Textures", "SDL_Textures\SDL_Textures.vcxproj", "{BA90B262-484D-4D82-8CAC-567F8E66740B}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -23,14 +21,6 @@ Global
 		{E6B92B2C-8DEA-4BC5-B619-0D9EE264B8E0}.Release|x64.Build.0 = Release|x64
 		{E6B92B2C-8DEA-4BC5-B619-0D9EE264B8E0}.Release|x86.ActiveCfg = Release|Win32
 		{E6B92B2C-8DEA-4BC5-B619-0D9EE264B8E0}.Release|x86.Build.0 = Release|Win32
-		{BA90B262-484D-4D82-8CAC-567F8E66740B}.Debug|x64.ActiveCfg = Debug|x64
-		{BA90B262-484D-4D82-8CAC-567F8E66740B}.Debug|x64.Build.0 = Debug|x64
-		{BA90B262-484D-4D82-8CAC-567F8E66740B}.Debug|x86.ActiveCfg = Debug|Win32
-		{BA90B262-484D-4D82-8CAC-567F8E66740B}.Debug|x86.Build.0 = Debug|Win32
-		{BA90B262-484D-4D82-8CAC-567F8E66740B}.Release|x64.ActiveCfg = Release|x64
-		{BA90B262-484D-4D82-8CAC-567F8E66740B}.Release|x64.Build.0 = Release|x64
-		{BA90B262-484D-4D82-8CAC-567F8E66740B}.Release|x86.ActiveCfg = Release|Win32
-		{BA90B262-484D-4D82-8CAC-567F8E66740B}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

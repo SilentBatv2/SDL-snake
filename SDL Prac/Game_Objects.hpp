@@ -3,28 +3,34 @@
 class Object
 {
 protected:
-	SDL_Texture* texture[2];
-	const SDL_FRect* srcrect;
-	SDL_FRect* dstrect;
+	//SDL_Texture* texture;
+	//SDL_Rect* srcrect;
+	//SDL_Rect* dstrect;
+	int* pos;
+	int* vel;
+	//bool* initialized;
+	//void update_dest(int x_scale, int y_scale);
 public:
-	Object()
-	{
-		texture[0] = nullptr;
-		texture[1] = nullptr;
-		srcrect = nullptr;
-		dstrect = nullptr;
-	}
-};
+	Object();
+	Object(Object&obj);
+	//Object(SDL_Rect srcrec);
+	~Object();
 
-class snake
-{
-	Object head;
-	Object tail;
-	Object body;
+	//void Init_Object(const char* loc, SDL_Renderer* rend);
+	//void Init_Object_outloc(SDL_Rect recto);  // meant to be called in game.cpp
+	//SDL_Texture* Get_Texture();
+	//SDL_Rect* Get_SrcRect();
+	//SDL_Rect* Get_DstRect();
+	void SetPos(int xpos, int ypos);
+	void SetVel(int xvel, int yvel);
+	void update_pos();
+	int* GetPos();
+	int* GetVel();
+	//void clear();
 };
 
 class Treat
 {
 	Object treat;
-	static int spawn;
+	int spawn;
 };
