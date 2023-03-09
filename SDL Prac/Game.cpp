@@ -16,12 +16,11 @@ SDL_Texture* Game::treat = nullptr;
 int Game::Map::rows = 0;
 int Game::Map::columns = 0;
 bool Game::Map::initialized = false;
-SDL_Rect* Game::Map::rect = nullptr;
+SDL_Rect Game::Map::rect = { 0 };
 
 Game::Map::Map()
 {
 	//map = nullptr;
-	rect = nullptr;
 	rows = 0;
 	columns = 0;
 	initialized = false;
@@ -37,7 +36,7 @@ Game::Map::~Map()
 
 void Game::Map::Init(int row, int col)
 {
-	rect = new SDL_Rect;
+	//rect = new SDL_Rect;
 	columns = col;
 	rows = row;
 	/*map = new int* [row];
@@ -52,9 +51,9 @@ void Game::Map::Init(int row, int col)
 	initialized = true;
 }
 
-SDL_Rect* Game::Map::get_rect(int* pos, int x_scale = TILE_X_SIZE, int y_scale = TILE_Y_SIZE)
+SDL_Rect Game::Map::get_rect(int* pos, int x_scale = TILE_X_SIZE, int y_scale = TILE_Y_SIZE)
 {
-	*rect = {pos[0]*x_scale, pos[1]*y_scale, x_scale, y_scale};
+	rect = {pos[0]*x_scale, pos[1]*y_scale, x_scale, y_scale};
 	return rect;
 }
 
@@ -88,7 +87,8 @@ Game::Game()
 	win_hight = 0;
 	win_width = 0;
 	Sn = nullptr;
-	treatpos = nullptr;
+	// fill zeroes in array
+	std::fill(treatpos, treatpos + 2, 0);
 }
 
 Game::~Game()
@@ -101,7 +101,8 @@ Game::~Game()
 
 void Render_body(node<snake_body>* &sn, SDL_Renderer* &rend)
 {
-	SDL_RenderCopy(rend, Game::get_texture(BODY), nullptr, Game::Map::get_rect(sn->get_data().GetPos()));
+	SDL_Rect rect = Game::Map::get_rect(sn->get_data().GetPos());
+	SDL_RenderCopy(rend, Game::get_texture(BODY), nullptr, &rect);
 	/*if (update)
 	{
 		sn->get_data().update();
@@ -110,7 +111,7 @@ void Render_body(node<snake_body>* &sn, SDL_Renderer* &rend)
 
 bool Game::init(const char* title, int xpos, int ypos, int width, int hight, bool fullscreen)
 {
-	treatpos = new int[2];
+	//treatpos = new int[2];
 	set_treat_pos();
 	win_hight = hight;
 	win_width = width;
@@ -123,21 +124,38 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int hight, boo
 		{
 			std::cout << "window created.\n";
 		}
+		else
+		{
+			std::cout << "window creation failed.\n";
+			return false;
+		}
 		renderer = SDL_CreateRenderer(window, -1, 0);
 		if (renderer)
 		{
 			SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 			std::cout << "renderer initialized\n";
 		}
+		else
+		{
+			std::cout << "renderer initialization failed\n";
+			return false;
+		}
+
 		is_running = true;
+
 		head = texture_maneger::load_texture("Assets/Blue.png", renderer);
 		body = texture_maneger::load_texture("Assets/Green.png", renderer);
 		treat = texture_maneger::load_texture("Assets/Red.png", renderer);
+
 		game_map.Init(GRID_IN_X, GRID_IN_Y);
-		int* a = new int[2] { (GRID_IN_X)/2 - SPAWN_IN_X, (GRID_IN_X)/2 + SPAWN_IN_X }, * b = new int[2] {(GRID_IN_Y)/2 - SPAWN_IN_Y, (GRID_IN_Y)/2 + SPAWN_IN_Y};
+
+		int a[2] = { (GRID_IN_X) / 2 - SPAWN_IN_X, (GRID_IN_X) / 2 + SPAWN_IN_X };
+		int b[2] = {(GRID_IN_Y) / 2 - SPAWN_IN_Y, (GRID_IN_Y) / 2 + SPAWN_IN_Y};
+
 		Sn = new snake(a, b);
-		delete[] a;
-		delete[] b;
+
+		//delete[] a;
+		//delete[] b;
 		/*red = new Object;
 		red->Init_Object("Assets/Red.png", renderer);
 		red->SetPos(3, 0);
@@ -149,6 +167,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int hight, boo
 	}
 	else
 	{
+		std::cout << "SDL initialization failed\n";
 		is_running = false;
 		return false;
 	}
@@ -187,9 +206,9 @@ void Game::handle_events()
 				
 				if (key_press)
 				{
-					if (Sn->head->GetVel()[1] != -1)
+					if (Sn->head.GetVel()[1] != -1)
 					{
-						Sn->head->SetVel(0, 1);
+						Sn->head.SetVel(0, 1);
 					}
 				}
 				key_press = false;
@@ -197,9 +216,9 @@ void Game::handle_events()
 			case SDLK_UP:
 				if (key_press)
 				{
-					if (Sn->head->GetVel()[1] != 1)
+					if (Sn->head.GetVel()[1] != 1)
 					{
-						Sn->head->SetVel(0, -1);
+						Sn->head.SetVel(0, -1);
 					}
 				}
 				key_press = false;
@@ -207,9 +226,9 @@ void Game::handle_events()
 			case SDLK_RIGHT:
 				if (key_press)
 				{
-					if (Sn->head->GetVel()[0] != -1)
+					if (Sn->head.GetVel()[0] != -1)
 					{
-						Sn->head->SetVel(1, 0);
+						Sn->head.SetVel(1, 0);
 					}
 				}
 				key_press = false;
@@ -217,9 +236,9 @@ void Game::handle_events()
 			case SDLK_LEFT:
 				if (key_press)
 				{
-					if (Sn->head->GetVel()[0] != 1)
+					if (Sn->head.GetVel()[0] != 1)
 					{
-						Sn->head->SetVel(-1, 0);
+						Sn->head.SetVel(-1, 0);
 					}
 				}
 				key_press = false;
@@ -232,7 +251,7 @@ void Game::handle_events()
 void Game::update()
 {
 	Sn->update();
-	Sn->head->update_pos();
+	Sn->head.update_pos();
 	if (check_treat())
 	{
 		Sn->body.pop_back();
@@ -251,7 +270,7 @@ void Game::set_treat_pos()
 
 bool Game::check_treat()
 {
-	if (Sn->head->GetPos()[0] == treatpos[0] && Sn->head->GetPos()[1] == treatpos[1])
+	if (Sn->head.GetPos()[0] == treatpos[0] && Sn->head.GetPos()[1] == treatpos[1])
 	{
 		set_treat_pos();
 		return false;
@@ -262,8 +281,10 @@ bool Game::check_treat()
 void Game::render()
 {
 	SDL_RenderClear(renderer);
-	SDL_RenderCopy(renderer, Game::get_texture(HEAD), nullptr, Game::Map::get_rect(Sn->head->GetPos()));
-	SDL_RenderCopy(renderer, Game::get_texture(TREAT), nullptr, Game::Map::get_rect(treatpos));
+	SDL_Rect rect = Game::Map::get_rect(Sn->head.GetPos());
+	SDL_RenderCopy(renderer, Game::get_texture(HEAD), nullptr, &rect);
+	rect = Game::Map::get_rect(treatpos);
+	SDL_RenderCopy(renderer, Game::get_texture(TREAT), nullptr, &rect);
 
 	Sn->body.iter_func_rev(Render_body, INT_MAX, INT_MIN, renderer);
 	SDL_RenderPresent(renderer);
@@ -280,5 +301,5 @@ void Game::clean()
 	is_running = false;
 	std::cout << "closed all subsystems.\n";
 	delete Sn;
-	delete[] treatpos;
+	//delete[] treatpos;
 }

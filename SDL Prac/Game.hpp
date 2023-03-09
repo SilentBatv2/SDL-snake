@@ -9,32 +9,29 @@ enum Obj_typ
 	HEAD, BODY, TREAT
 };
 
-static class Game
+// in c++ classes can not be static, their instances or members can be
+class Game
 {
 private:
-
-
 	SDL_Window* window;
 	static int win_width;
 	static int win_hight;
-	int* treatpos;
+	int treatpos[2];
 	SDL_Renderer* renderer;
 	static SDL_Texture* head;
 	static SDL_Texture* body;
 	static SDL_Texture* treat;
-	//Object* red;
 	snake* Sn;
 	bool is_running;
 	void set_treat_pos();
 	bool check_treat();
 public:
-	static class Map
+	class Map
 	{
-		//static int** map;
 		static int rows;
 		static int columns;
 		static bool initialized;
-		static SDL_Rect* rect;
+		static SDL_Rect rect;
 	public:
 		Map();
 		~Map();
@@ -42,7 +39,7 @@ public:
 		static void free();
 		static int get_row();
 		static int get_columns();
-		static SDL_Rect* get_rect(int* pos, int x_scale, int y_scale);
+		static SDL_Rect get_rect(int* pos, int x_scale, int y_scale);
 	};
 	Game();
 	~Game();

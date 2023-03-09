@@ -2,29 +2,15 @@
 
 #include<../../Game_Objects.hpp>
 
-Object::Object()
+Object::Object() 
+	: pos{ 0,0 }, vel{0, 0}
 {
-	//initialized = new bool(false);
-	//texture = nullptr;
-	pos = new int[2];
-	pos[0] = 0;
-	pos[1] = 0;
-	vel = new int[2];
-	vel[0] = 0;
-	vel[1] = 0;
-	//srcrect = nullptr;
-	//dstrect = nullptr;
 }
 
 
 Object::Object(Object &obj)
+	: pos{ obj.pos[0], obj.pos[1] }, vel{obj.vel[0], obj.vel[1]}
 {
-	pos = new int[2];
-	pos[0] = obj.GetPos()[0];
-	pos[1] = obj.GetPos()[1];
-	vel = new int[2];
-	vel[0] = obj.GetVel()[0];
-	vel[1] = obj.GetVel()[1];
 }
 
 /*Object::Object(SDL_Rect srcrec)
@@ -39,8 +25,8 @@ Object::Object(Object &obj)
 
 Object::~Object()
 {
-	delete[] pos;
-	delete[] vel;
+	//delete[] pos;
+	//delete[] vel;
 }
 
 /*void Object::Init_Object(const char* loc, SDL_Renderer* rend)
@@ -89,7 +75,6 @@ SDL_Rect* Object::Get_DstRect()
 
 void Object::SetPos(int xpos, int ypos)
 {
-
 	pos[0] = xpos;
 	pos[1] = ypos;
 }

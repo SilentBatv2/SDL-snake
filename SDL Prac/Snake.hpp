@@ -1,12 +1,12 @@
 #pragma once
-#include<../../Linked_List.hpp>
-#include<../../Game_Objects.hpp>
-#include<random>
+#include <../../Linked_List.hpp>
+#include <../../Game_Objects.hpp>
+#include <random>
 
 class snake_head : public Object
 {
 protected:
-	bool* dir;
+	bool dir[2];
 public:
 	snake_head();
 	~snake_head();
@@ -17,7 +17,7 @@ public:
 class snake_body : public Object
 {
 protected:
-	int* timer;
+	int timer;
 public:
 	snake_body(int t);
 	snake_body(snake_body &sn);
@@ -30,11 +30,11 @@ public:
 class snake
 {
 protected:
-	snake_head* head;
-	snake_body* sb_o;
-	Linked_List<snake_body> body;
-	int* length;
+	snake_head head;
+	snake_body sb_o;
+	int length;
 	SDL_Renderer* renderer;
+	Linked_List<snake_body> body;
 public:
 	snake(int* gen_lim_x, int* gen_lim_y);
 	void update();
