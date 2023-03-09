@@ -6,8 +6,8 @@ protected:
 	//SDL_Texture* texture;
 	//SDL_Rect* srcrect;
 	//SDL_Rect* dstrect;
-	int* pos;
-	int* vel;
+	int pos[2];
+	int vel[2];
 	//bool* initialized;
 	//void update_dest(int x_scale, int y_scale);
 public:
